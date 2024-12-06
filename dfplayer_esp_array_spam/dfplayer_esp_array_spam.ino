@@ -8,7 +8,6 @@ const int rowPins[4] = {5, 6, 7, 8};   // R1-R4
 
 SoftwareSerial mySoftwareSerial(21, 20); // RX, TX
 DFRobotDFPlayerMini myDFPlayer;
-int buttonPressedA = 0;
 
 void setup() {
 
@@ -27,7 +26,7 @@ void setup() {
   mySoftwareSerial.begin(9600);
   myDFPlayer.begin(mySoftwareSerial);
 
-  myDFPlayer.volume(30);//30 db max
+  myDFPlayer.volume(5);//30 db max
 }
 
 int scanButtons() {
@@ -47,16 +46,17 @@ int scanButtons() {
   }
   return -1; // Ningún botón presionado
 }
+int buttonPressedA = 0;
 void loop() {
   int buttonPressed = scanButtons();
 
-  if (buttonPressed != -1 && buttonPressed != buttonPressedA) {
+  if (buttonPressed != -1 ) {//&& buttonPressed != buttonPressedA
 
     // Reproducir pista de audio correspondiente al botón
     myDFPlayer.play(buttonPressed);
 
     // Debounce
-    delay(50);
+    delay(100);
 
     // Esperar a que se suelte el botón
     // while(scanButtons() != -1);
